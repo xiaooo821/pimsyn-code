@@ -1,0 +1,164 @@
+{
+    "rram_ratio": 0.2,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "power_efficiency": 322.9097124458394,
+    "dac_res": 1,
+    "adc_res": 9,
+    "macro_h": 14,
+    "macro_w": 14,
+    "spm_capacity": 2048,
+    "input": {
+        "duplication": 357,
+        "macro_num": 15,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.4": {
+        "duplication": 352,
+        "macro_num": 44,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.8": {
+        "duplication": 86,
+        "POOL": 24
+    },
+    "input.12": {
+        "duplication": 88,
+        "macro_num": 12,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.16": {
+        "duplication": 89,
+        "macro_num": 19,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.20": {
+        "duplication": 22,
+        "POOL": 24
+    },
+    "input.24": {
+        "duplication": 22,
+        "macro_num": 5,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.28": {
+        "duplication": 24,
+        "macro_num": 10,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.32": {
+        "duplication": 6,
+        "POOL": 24
+    },
+    "input.36": {
+        "duplication": 6,
+        "macro_num": 5,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.40": {
+        "duplication": 6,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.44": {
+        "duplication": 2,
+        "POOL": 24
+    },
+    "input.48": {
+        "duplication": 2,
+        "macro_num": 3,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.52": {
+        "duplication": 2,
+        "macro_num": 3,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.56": {
+        "duplication": 1,
+        "POOL": 24
+    },
+    "onnx::Flatten_52": {
+        "duplication": 1,
+        "POOL": 24
+    },
+    "input.60": {
+        "duplication": 1,
+        "macro_num": 49,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.64": {
+        "duplication": 1,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "58": {
+        "duplication": 1,
+        "macro_num": 3,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 342,
+        "SHIFTADD": 43,
+        "ADDITION": 1
+    }
+}
