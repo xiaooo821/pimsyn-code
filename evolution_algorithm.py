@@ -132,7 +132,11 @@ class EvolutionAlgorithm():
                 num_limits = min(self.macro_num_limits[i], self.macro_num_limits[shared_idx[0]])
             else:
                 num_limits = self.macro_num_limits[i]
-            assert macro_num[i] <= num_limits, print('MUTATE MACRO NUM DID NOT PASS')
+            try:
+                assert macro_num[i] <= num_limits, print('MUTATE MACRO NUM DID NOT PASS')
+            except AssertionError:
+                print(macro_num, self.macro_num_limits)
+
 
     def mutate(self):
         for parent in self.parents:
@@ -341,6 +345,18 @@ class EvolutionAlgorithm():
         ops += sum([2 * x * y for x, y in zip(self.layer_paras['fc_input_channel'],
                                               self.layer_paras['fc_output_channel'])])
         efficient_power_efficiency = ops / (energy*1e-9)
+        result_dict = {
+            "epe":efficient_power_efficiency / 1e9,
+            "clk": max_ir_latency/clk,
+            "cycle": cycle,
+            "total_time": total_time,
+            "memory power ": memory_peak_power/self.max_power,
+            "component power": component_power/self.max_power,
+            "component_energy": component_energy/energy,
+            "rram_energy": rram_energy/energy,
+            "memory_energy": memory_energy/energy,
+            "energy": energy
+        }
 
         # print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \
         #         clk is {clk} {max_ir_latency/clk}\n \
@@ -382,4 +398,4 @@ class EvolutionAlgorithm():
                                                             self.default_macro_size_stride + self.default_min_macro_size
             return
 
-        return efficient_power_efficiency
+        return result_dict

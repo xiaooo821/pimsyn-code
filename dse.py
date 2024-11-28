@@ -27,23 +27,117 @@ def set_weight_duplication(layer_dict, dup):
             nn_layer.op_cnt = min(nn_layer.op_cnt, nn_layer.W*nn_layer.H)
             nn_layer.dup = math.ceil(nn_layer.W*nn_layer.H/nn_layer.op_cnt)
 
-
 def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
 
+    best_ever = -1
+    best_arch = {
+        'rram_ratio': rram_ratio,
+        'rram_res': rram_res,
+        'xbar_size': xbar_size,
+        'power_efficiency': -1,
+        'dup': None,
+        'gene': None,
+        'xbar_alloc': None
+    }
 
     nn_parser = NeuralNetworkParser(pimsyn_cfg['network'])
     nn_parser.parse_neural_network()
     layer_paras = nn_parser.layer_paras
     layer_dict = nn_parser.layer_dict
     layer_list = nn_parser.conv_list + nn_parser.fc_list
-
+    # print("layer_list:",layer_list)
+    # print("len(layer_list):", len(layer_list))
     rrams_for_weight = math.ceil(pimsyn_cfg["weight_res"]/rram_res)
+    # set
     conv_weight_volumn = [rrams_for_weight * math.ceil(x/xbar_size) * math.ceil(y/xbar_size) for x, y
                           in zip(layer_paras['conv_input_lenth'], layer_paras['conv_output_channel'])]
     fc_weight_volumn = [rrams_for_weight * math.ceil(x/xbar_size) * math.ceil(y/xbar_size)
                         for x, y in zip(layer_paras['fc_input_channel'],
                                         layer_paras['fc_output_channel'])]
     total_power = pimsyn_cfg["total_power"]
+    print("total_power:", total_power)
+    rram_power = total_power * rram_ratio
+    xbar_paras = pimsyn_cfg['RRAM'][f'{xbar_size}_{rram_res}']
+    total_xbar_num = int(rram_power / xbar_paras['peak_power'])
+    conv_xbar_num = total_xbar_num - sum(fc_weight_volumn)
+
+    if conv_xbar_num <= sum(conv_weight_volumn):
+        print(f"Processing ({rram_ratio}, {rram_res}, {xbar_size}) RRAM CAPACITY IS NOT ENOUGH")
+        return best_arch
+
+    ea_engine = EvolutionAlgorithm(layer_dict=layer_dict,
+                                   layer_list=layer_list,
+                                   layer_paras=layer_paras,
+                                   config=pimsyn_cfg,
+                                   max_power=total_power-rram_power,
+                                   rram_res=rram_res,
+                                   xbar_size=xbar_size
+                                   )
+    sa_engine = SimulatedAnnealingAlgorithm(layer_parameters=layer_paras,
+                                            weight_volumn=conv_weight_volumn,
+                                            xbar_size=xbar_size,
+                                            rrams_for_weight=rrams_for_weight,
+                                            sa_config=pimsyn_cfg["SA"]
+                                            )
+
+    start = time.time()
+    sa_engine.run(conv_xbar_num)
+
+    for dup in tqdm(sa_engine.candidates,
+                    desc=f'Iterate dup candidates rram_ratio={rram_ratio} rram_res={rram_res} xbar_size={xbar_size}'):
+        set_weight_duplication(layer_dict, dup)
+        ea_engine.build_mutate_space()
+        # print('dup is', dup)
+        for dac_res in DEFAULT_DAC_RESOLUTION:
+            # print('dac_res is', dac_res)
+            adc_res = int(math.log(xbar_size, 2) + dac_res + rram_res - 1) \
+                if dac_res > 1 and rram_res > 1 else \
+                int(math.log(xbar_size, 2) + dac_res + rram_res - 2)
+            if adc_res not in DEFAULT_ADC_RESOLUTION:
+                continue
+            ea_engine.run(dac_res, adc_res)
+
+            if ea_engine.best_perf > best_ever:
+                best_ever = ea_engine.best_perf
+                xbar_alloc = [x * y for x, y in zip(dup, conv_weight_volumn)] + fc_weight_volumn
+                best_arch['gene'] = ea_engine.best_gene
+                best_arch['dac_res'] = dac_res
+                best_arch['adc_res'] = adc_res
+                best_arch['dup'] = dup
+                best_arch['xbar_alloc'] = xbar_alloc
+                best_arch['power_efficiency'] = ea_engine.best_perf/1e9
+
+    set_weight_duplication(layer_dict, dup)
+    ea_engine.evaluate_fitness(best_arch['gene'],
+                               best_arch['dac_res'],
+                               best_arch['adc_res'],
+                               loginfo=best_arch
+                               )
+    end = time.time()
+    duration = (end-start)/60
+    print(f"Processing ({rram_ratio}, {rram_res}, {xbar_size}) cost {duration}min \
+          with efficienct power efficiency = {best_ever/1e+9}GOPS/W")
+
+    return best_arch
+
+def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
+    nn_parser = NeuralNetworkParser(pimsyn_cfg['network'])
+    nn_parser.parse_neural_network()
+    layer_paras = nn_parser.layer_paras
+    layer_dict = nn_parser.layer_dict
+    layer_list = nn_parser.conv_list + nn_parser.fc_list
+    macro_size = pimsyn_cfg["input"]["macro_size"]
+
+    rrams_for_weight = math.ceil(pimsyn_cfg["weight_res"]/rram_res)
+    # conv set
+    conv_weight_volumn = [rrams_for_weight * math.ceil(x/xbar_size) * math.ceil(y/xbar_size) for x, y
+                          in zip(layer_paras['conv_input_lenth'], layer_paras['conv_output_channel'])]
+    # fc set
+    fc_weight_volumn = [rrams_for_weight * math.ceil(x/xbar_size) * math.ceil(y/xbar_size)
+                        for x, y in zip(layer_paras['fc_input_channel'],
+                                        layer_paras['fc_output_channel'])]
+    total_power = pimsyn_cfg["total_power"]
+    print("total_power:", total_power)
     rram_power = total_power * rram_ratio
     xbar_paras = pimsyn_cfg['RRAM'][f'{xbar_size}_{rram_res}']
     total_xbar_num = int(rram_power / xbar_paras['peak_power'])
@@ -70,39 +164,46 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
 
     start = time.time()
     sa_engine.run(conv_xbar_num)
-
+    best_epe=-10000
+    best_gene=[]
     # dup是每个层的权重复制因子/candidates每一层都是一个列表，代表一种dup
     for dup in tqdm(sa_engine.candidates,
                     desc=f'Iterate dup candidates rram_ratio={rram_ratio} rram_res={rram_res} xbar_size={xbar_size}'):
+        print('dup is', dup)
         set_weight_duplication(layer_dict, dup)
-        # ea_engine.build_mutate_space() 不使用EA 所以变异空间也不用构造了吧？
+        # dup doesn't include fc, gene include fc
+        # #macro of each layer = concat[dup, [1 for i in # 0f fc]] * concat(conv_set, fc_set)
+        # ea_engine.build_mutate_space() 不使用EA 所以变异空间也不用构造
         # use baseline's dac_res
         # construct gene with baseline's macro size
         # efficient power efficiency = en_engine.evaluate_fitness()
         #  gene: #macro of each layer = (dup(SA) * set) / macro size (config)
             # ea_engine.run(dac_res, adc_res)
-        best_gene=[]
-
+        combined_lists=dup+[1 for _ in range(len(nn_parser.fc_list))]
+        combined_sets=conv_weight_volumn+fc_weight_volumn
+        macro_of_each_layer=[math.ceil(a*b/macro_size) for a,b in zip(combined_lists,combined_sets)]
+        gene = [(i + 1) * 1000 + macro_of_each_layer[i] for i in range(len(macro_of_each_layer))]
+        # print("gene:",gene)
+        # print("len(gene):",len(gene))
+        res = ea_engine.evaluate_fitness(gene,
+                                         pimsyn_cfg["dac_res"],
+                                         pimsyn_cfg["adc_res"])
+        if res["epe"] > best_epe:
+            best_gene=gene
             # if ea_engine.best_perf > best_ever:
             #     best_ever = ea_engine.best_perf
             #     xbar_alloc = [x * y for x, y in zip(dup, conv_weight_volumn)] + fc_weight_volumn
-            #     best_arch['gene'] = ea_engine.best_gene
-            #     best_arch['dac_res'] = dac_res
-            #     best_arch['adc_res'] = adc_res
-            #     best_arch['dup'] = dup
-            #     best_arch['xbar_alloc'] = xbar_alloc
-            #     best_arch['power_efficiency'] = ea_engine.best_perf/1e9
 
-    # use this
-    epe=ea_engine.evaluate_fitness(best_gene,
+    #  use this
+    best_res=ea_engine.evaluate_fitness(best_gene,
                                pimsyn_cfg["dac_res"],
                                pimsyn_cfg["adc_res"])
     end = time.time()
     duration = (end-start)/60
     print(f"Processing ({rram_ratio}, {rram_res}, {xbar_size}) cost {duration}min \
-          with efficienct power efficiency = {epe}GOPS/W")
+          with efficienct power efficiency = {best_res["epe"]}GOPS/W")
 
-    return epe/1e9
+    return best_res
 
 
 if __name__ == '__main__':

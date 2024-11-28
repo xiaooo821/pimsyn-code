@@ -1,0 +1,190 @@
+{
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "power_efficiency": 337.040638571257,
+    "dac_res": 1,
+    "adc_res": 9,
+    "macro_h": 15,
+    "macro_w": 14,
+    "spm_capacity": 2048,
+    "vgg0_conv0_fwd": {
+        "duplication": 684,
+        "macro_num": 15,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv1_fwd": {
+        "duplication": 659,
+        "macro_num": 48,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_pool0_fwd": {
+        "duplication": 141,
+        "POOL": 13
+    },
+    "vgg0_conv2_fwd": {
+        "duplication": 176,
+        "macro_num": 11,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv3_fwd": {
+        "duplication": 159,
+        "macro_num": 17,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_pool1_fwd": {
+        "duplication": 32,
+        "POOL": 13
+    },
+    "vgg0_conv4_fwd": {
+        "duplication": 50,
+        "macro_num": 23,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv5_fwd": {
+        "duplication": 40,
+        "macro_num": 10,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv6_fwd": {
+        "duplication": 40,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_pool2_fwd": {
+        "duplication": 9,
+        "POOL": 13
+    },
+    "vgg0_conv7_fwd": {
+        "duplication": 11,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv8_fwd": {
+        "duplication": 10,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv9_fwd": {
+        "duplication": 11,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_pool3_fwd": {
+        "duplication": 3,
+        "POOL": 13
+    },
+    "vgg0_conv10_fwd": {
+        "duplication": 6,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv11_fwd": {
+        "duplication": 3,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_conv12_fwd": {
+        "duplication": 4,
+        "macro_num": 3,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_pool4_fwd": {
+        "duplication": 1,
+        "POOL": 13
+    },
+    "vgg0_dense0_fwd": {
+        "duplication": 1,
+        "macro_num": 33,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_dense1_fwd": {
+        "duplication": 1,
+        "macro_num": 6,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1,
+        "RELU": 1
+    },
+    "vgg0_dense2_fwd": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 576,
+        "ADC": 478,
+        "SHIFTADD": 60,
+        "ADDITION": 1
+    }
+}

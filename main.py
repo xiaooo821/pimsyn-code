@@ -2,14 +2,22 @@ import argparse
 import json
 import math
 from multiprocessing import Pool, Manager
+
+from onnxruntime.transformers.bert_test_data import output_test_data
+
 from frontend import FrontEnd
-from dse import design_space_exploration
+from dse import design_space_exploration,design_space_exploration2
 
 
 DEFAULT_XBAR_SIZE = [128, 256, 512]
 DEFAULT_RRAM_RESOLUTION = [1, 2, 4]
 DEFAULT_RRAM_RATIO = [0.15, 0.2, 0.25, 0.3]
 
+# 将epe_result以json形式存入文件output_path中
+def save_result_to_json(res, output_path):
+
+    with open(output_path, 'w') as f:
+        json.dump(res, f,indent=4)
 
 def print_accelerator_configuration(arch, file_path):
 
@@ -55,7 +63,8 @@ if __name__ == '__main__':
                         help='Specify the output path of onnx2json frontend')
     parser.add_argument('--total_power', '-p',
                         type=float,
-                        required=True,
+                        default=0,
+                        # required=True,
                         help='Specify the peak power limitation')
     parser.add_argument('--macro_setting', '-m',
                         type=str,
@@ -79,11 +88,17 @@ if __name__ == '__main__':
                         type=str,
                         default="./output/pimcomp.json",
                         help='The path of input arguments for PIMCOMP')
+    #新增
+    parser.add_argument('--use_existing_config',
+                        type=str,
+                        default=None,
+                        help='Path or identifier of existing optimal configuration to use')
+
 
     args = parser.parse_args()
     config_file = open(args.config, 'r')
     pimsyn_cfg = json.load(config_file)
-    pimsyn_cfg.update(vars(args))
+    pimsyn_cfg.update(vars(args)) # 把命令行输入存进来
     if args.onnx_path:
         frontend = FrontEnd(args.onnx_path, args.network)
         frontend.run()
@@ -93,26 +108,47 @@ if __name__ == '__main__':
     manager = Manager()
     shared_cfg = manager.dict(pimsyn_cfg)
 
-    with Pool() as pool:
-        for rram_ratio in DEFAULT_RRAM_RATIO:
-            for rram_res in DEFAULT_RRAM_RESOLUTION:
-                for xbar_size in DEFAULT_XBAR_SIZE:
-                    result = pool.apply_async(design_space_exploration,
-                                              args=(rram_ratio,
-                                                    rram_res,
-                                                    xbar_size,
-                                                    shared_cfg))
-                    arch_candidates.append(result)
-        pool.close()
-        pool.join()
-    best_power_efficiency = -1
-    best_arch = None
-    for candidate in arch_candidates:
-        arch = candidate.get()
-        if arch['power_efficiency'] > best_power_efficiency:
-            best_arch = arch
-            best_power_efficiency = arch['power_efficiency']
-    if best_arch:
-        if args.macro_setting == 'unified':
-            print_pimcomp_configuration(best_arch, args.pimcomp)
-        print_accelerator_configuration(best_arch, args.output)
+    upload_config = {}
+    if args.use_existing_config: #如果用已有的配置跑程序的话
+        with open(args.use_existing_config,'r') as file:
+            upload_config=json.load(file)
+            pimsyn_cfg.update(upload_config)
+        # epe efficient power efficiency
+        result=design_space_exploration2(pimsyn_cfg["rram_ratio"],
+                                 pimsyn_cfg["rram_res"],
+                                 pimsyn_cfg["xbar_size"],
+                                            pimsyn_cfg)
+        print("efe of current CNN network using existed parameter is: ",result["epe"])
+        # 输出到output文件中
+        output_path=args.output
+        save_result_to_json(result, args.output)
+
+
+
+    else:
+
+        with Pool() as pool:
+            for rram_ratio in [0.3]:
+                for rram_res in [2]:
+                    for xbar_size in [512]:
+                        result = pool.apply_async(design_space_exploration,
+                                                  args=(rram_ratio,
+                                                        rram_res,
+                                                        xbar_size,
+                                                        shared_cfg))
+                        arch_candidates.append(result)
+            pool.close()
+            pool.join()
+
+        best_power_efficiency = -1
+        best_arch = None
+        for candidate in arch_candidates:
+            arch = candidate.get()
+            if arch['power_efficiency'] > best_power_efficiency:
+                best_arch = arch
+                best_power_efficiency = arch['power_efficiency']
+        if best_arch:
+            print(f"最佳架构的功率效率为: {best_power_efficiency}")
+            if args.macro_setting == 'unified':
+                print_pimcomp_configuration(best_arch, args.pimcomp)
+            print_accelerator_configuration(best_arch, args.output)

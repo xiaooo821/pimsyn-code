@@ -1,0 +1,267 @@
+{
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "power_efficiency": 615.6519859401911,
+    "dup": [
+        181,
+        16,
+        20,
+        29,
+        17,
+        18,
+        4,
+        4,
+        5,
+        4,
+        5,
+        1,
+        1,
+        1,
+        1,
+        1
+    ],
+    "gene": [
+        1010,
+        2004,
+        3009,
+        4014,
+        5008,
+        6009,
+        7004,
+        8008,
+        9009,
+        10008,
+        11009,
+        12002,
+        13002,
+        14002,
+        15002,
+        16002,
+        17060,
+        18008,
+        19004
+    ],
+    "dac_res": 1,
+    "adc_res": 9,
+    "macro_h": 14,
+    "macro_w": 13,
+    "spm_capacity": 1024,
+    "onnx::MaxPool_39": {
+        "duplication": 86,
+        "macro_num": 10,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input": {
+        "duplication": 19,
+        "POOL": 6
+    },
+    "input.4": {
+        "duplication": 28,
+        "macro_num": 4,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.8": {
+        "duplication": 16,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.12": {
+        "duplication": 16,
+        "macro_num": 14,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.16": {
+        "duplication": 16,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.20": {
+        "duplication": 16,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.24": {
+        "duplication": 4,
+        "POOL": 6
+    },
+    "input.28": {
+        "duplication": 5,
+        "macro_num": 4,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.32": {
+        "duplication": 5,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.36": {
+        "duplication": 4,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.40": {
+        "duplication": 4,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.44": {
+        "duplication": 5,
+        "macro_num": 9,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.48": {
+        "duplication": 1,
+        "POOL": 6
+    },
+    "input.52": {
+        "duplication": 6,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.56": {
+        "duplication": 2,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.60": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.64": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.68": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "onnx::Reshape_74": {
+        "duplication": 1,
+        "POOL": 6
+    },
+    "onnx::Reshape_82": {
+        "duplication": 1,
+        "POOL": 6
+    },
+    "onnx::Reshape_90": {
+        "duplication": 1,
+        "POOL": 6
+    },
+    "onnx::Reshape_98": {
+        "duplication": 1,
+        "POOL": 6
+    },
+    "input.72": {
+        "duplication": 1,
+        "macro_num": 60,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "input.76": {
+        "duplication": 1,
+        "macro_num": 8,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1,
+        "RELU": 2
+    },
+    "logits": {
+        "duplication": 1,
+        "macro_num": 4,
+        "macro_sharing": "None",
+        "macro_size": 256,
+        "ADC": 1087,
+        "SHIFTADD": 136,
+        "ADDITION": 1
+    }
+}
