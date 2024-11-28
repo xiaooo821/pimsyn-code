@@ -55,7 +55,7 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                         for x, y in zip(layer_paras['fc_input_channel'],
                                         layer_paras['fc_output_channel'])]
     total_power = pimsyn_cfg["total_power"]
-    print("total_power:", total_power)
+    # print("total_power:", total_power)
     rram_power = total_power * rram_ratio
     xbar_paras = pimsyn_cfg['RRAM'][f'{xbar_size}_{rram_res}']
     total_xbar_num = int(rram_power / xbar_paras['peak_power'])
@@ -87,7 +87,7 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                     desc=f'Iterate dup candidates rram_ratio={rram_ratio} rram_res={rram_res} xbar_size={xbar_size}'):
         set_weight_duplication(layer_dict, dup)
         ea_engine.build_mutate_space()
-        # print('dup is', dup)
+        print('dup is', dup)
         for dac_res in DEFAULT_DAC_RESOLUTION:
             # print('dac_res is', dac_res)
             adc_res = int(math.log(xbar_size, 2) + dac_res + rram_res - 1) \
@@ -137,7 +137,7 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                         for x, y in zip(layer_paras['fc_input_channel'],
                                         layer_paras['fc_output_channel'])]
     total_power = pimsyn_cfg["total_power"]
-    print("total_power:", total_power)
+    # print("total_power:", total_power)
     rram_power = total_power * rram_ratio
     xbar_paras = pimsyn_cfg['RRAM'][f'{xbar_size}_{rram_res}']
     total_xbar_num = int(rram_power / xbar_paras['peak_power'])
@@ -185,7 +185,7 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
         gene = [(i + 1) * 1000 + macro_of_each_layer[i] for i in range(len(macro_of_each_layer))]
         # print("gene:",gene)
         # print("len(gene):",len(gene))
-        res = ea_engine.evaluate_fitness(gene,
+        res = ea_engine.evaluate_fitness2(gene,
                                          pimsyn_cfg["dac_res"],
                                          pimsyn_cfg["adc_res"])
         if res["epe"] > best_epe:
@@ -195,7 +195,7 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
             #     xbar_alloc = [x * y for x, y in zip(dup, conv_weight_volumn)] + fc_weight_volumn
 
     #  use this
-    best_res=ea_engine.evaluate_fitness(best_gene,
+    best_res=ea_engine.evaluate_fitness2(best_gene,
                                pimsyn_cfg["dac_res"],
                                pimsyn_cfg["adc_res"])
     end = time.time()

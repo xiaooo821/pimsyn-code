@@ -126,11 +126,10 @@ if __name__ == '__main__':
 
 
     else:
-
         with Pool() as pool:
-            for rram_ratio in [0.3]:
-                for rram_res in [2]:
-                    for xbar_size in [512]:
+            for rram_ratio in DEFAULT_RRAM_RATIO:
+                for rram_res in DEFAULT_RRAM_RESOLUTION:
+                    for xbar_size in DEFAULT_XBAR_SIZE:
                         result = pool.apply_async(design_space_exploration,
                                                   args=(rram_ratio,
                                                         rram_res,

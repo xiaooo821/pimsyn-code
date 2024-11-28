@@ -236,7 +236,7 @@ class EvolutionAlgorithm():
             nn_layer.op_delay[ld_id] = math.ceil(ld_delay[key]/clk)
             nn_layer.op_delay[st_id] = math.ceil(st_delay[key]/clk)
 
-    def evaluate_fitness(self, gene, dac_res, adc_res, rram_read_lat=100, loginfo=None):
+    def evaluate_fitness2(self, gene, dac_res, adc_res, rram_read_lat=100, loginfo=None):
 
         feasible = True
         clk = rram_read_lat
@@ -399,3 +399,156 @@ class EvolutionAlgorithm():
             return
 
         return result_dict
+
+
+    def evaluate_fitness(self, gene, dac_res, adc_res, rram_read_lat=100, loginfo=None):
+
+        feasible = True
+        clk = rram_read_lat
+        self.init_op_delay()
+        bit_loop_cnt = math.ceil(self.cfg['data_res']/dac_res)
+        rrams_for_weight = math.ceil(self.cfg['weight_res']/self.rram_res)
+        macro_alloc, macro_sharing, adc_conflict = self.set_macro_alloc(gene)
+
+        nn_macro_mapper = NeuralNetworkMacroMapper(self.layer_dict,
+                                                   macro_alloc,
+                                                   macro_sharing
+                                                   )
+        noc_conflict = nn_macro_mapper.determine_layout()
+        transfer_delay, merge_delay = evaluate_inter_macro_communication(self.layer_dict,
+                                                                         nn_macro_mapper.layout,
+                                                                         self.cfg['noc_bw'],
+                                                                         self.cfg['data_res']
+                                                                         )
+        total_macro_num = nn_macro_mapper.macro_num
+
+        self.set_inter_macro_communication_delay(transfer_delay, merge_delay, clk)
+        compiler = DataflowCompiler(self.layer_dict, bit_loop_cnt)
+
+        # Here the clk is not accurate so that the op delay of each IR is not accurate
+        # which makes the memory capacity an estimate value
+        approximate_memory_capacity = compiler.generate_dataflow_graph(adc_conflict,
+                                                                       noc_conflict,
+                                                                       self.cfg['data_res'])
+        if approximate_memory_capacity > 4096:
+            return 0
+        memory_capacity = 0
+        iteration = 0
+
+        # In normal circumstances, the storage capacity will converge to a fixed value after multiple iterations
+        while (iteration < 10):
+            iteration = iteration + 1
+            ld_latency, st_latency, memory_dynamic_energy, memory_static_power, memory_peak_power = \
+                evaluate_memory_related_metrics(self.layer_dict,
+                                                self.cfg['data_res'],
+                                                self.cfg['memory_bw'],
+                                                total_macro_num,
+                                                self.cfg['memory'][str(approximate_memory_capacity)],
+                                                self.xbar_size,
+                                                rrams_for_weight
+                                                )
+            # print(f'memory power is {memory_peak_power/self.max_power}\n \
+            #       capacity is {approximate_memory_capacity}\n \
+            #       total_macro_num is {total_macro_num}')
+
+            component_power = self.max_power - memory_peak_power - self.cfg['noc_power']
+            workload = calculate_workload(self.layer_dict,
+                                          self.xbar_size,
+                                          rrams_for_weight,
+                                          self.cfg['vfu_width']
+                                          )
+            mini_power = calculate_power_requirements(workload,
+                                                      self.cfg,
+                                                      dac_res,
+                                                      adc_res,
+                                                      self.layer_dict
+                                                      )
+            if mini_power >= component_power:
+                feasible = False
+                break
+            max_ir_latency, comp_alloc = allocate_components(workload, self.cfg,
+                                                             component_power,
+                                                             macro_sharing,
+                                                             adc_res, dac_res,
+                                                             self.cfg['macro_setting'],
+                                                             self.layer_dict
+                                                             )
+            if not comp_alloc:
+                break
+            clk = max(rram_read_lat, max_ir_latency)
+            self.set_intra_macro_communication_delay(ld_latency, st_latency, clk)
+            self.set_inter_macro_communication_delay(transfer_delay, merge_delay, clk)
+
+            memory_capacity = compiler.generate_dataflow_graph(adc_conflict,
+                                                               noc_conflict,
+                                                               self.cfg['data_res'])
+            if memory_capacity == approximate_memory_capacity or memory_capacity > 4096:
+                break
+            approximate_memory_capacity = memory_capacity
+
+        # local memory capacity is too large to achieve high power efficiency
+        if not feasible or memory_capacity > 4096:
+            return 0
+
+        cycle = compiler.step
+        total_time = cycle * clk
+        component_energy = evaluate_components_energy(self.cfg, workload, comp_alloc,
+                                                      self.layer_dict, bit_loop_cnt,
+                                                      dac_res, adc_res, total_time
+                                                      )
+        rram_energy = evaluate_rram_energy(self.layer_dict,
+                                           self.cfg['RRAM'][f'{self.xbar_size}_{self.rram_res}'],
+                                           self.xbar_size, bit_loop_cnt,
+                                           rrams_for_weight, total_time
+                                           )
+        memory_energy = memory_dynamic_energy + memory_static_power * total_time
+        noc_energy = self.cfg['noc_power'] * total_time
+        energy = component_energy + rram_energy + memory_energy + noc_energy
+        ops = sum([2 * x * y * z for x, y, z in zip(self.layer_paras['conv_input_lenth'],
+                                                    self.layer_paras['conv_output_size'],
+                                                    self.layer_paras['conv_output_channel'])])
+        ops += sum([2 * x * y for x, y in zip(self.layer_paras['fc_input_channel'],
+                                              self.layer_paras['fc_output_channel'])])
+        efficient_power_efficiency = ops / (energy*1e-9)
+
+        # print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \
+        #         clk is {clk} {max_ir_latency/clk}\n \
+        #         energy is {energy}\n \
+        #         time is {total_time}\n \
+        #         memory power is {memory_peak_power/self.max_power}\n \
+        #         component power is {component_power/self.max_power}\n \
+        #         memory energy is {memory_energy/energy}\n \
+        #         memory static energy is {memory_static_power * total_time/energy}\n \
+        #         memory dynamic energy is {memory_dynamic_energy/energy}\n \
+        #         component energy is {component_energy/energy}\n \
+        #         rram energy is {rram_energy/energy}')
+
+        if loginfo:
+            loginfo["macro_h"] = nn_macro_mapper.row
+            loginfo["macro_w"] = nn_macro_mapper.col
+            loginfo["spm_capacity"] = memory_capacity
+            idx = 0
+            max_macro_size = 0
+            for key, layer in self.layer_dict.items():
+                layer_info = {}
+                layer_info['duplication'] = layer.dup
+                if layer.op in ['OP_CONV', 'OP_FC']:
+                    layer_info['macro_num'] = macro_alloc[key]
+                    layer_info['macro_sharing'] = str(macro_sharing[key])
+                    layer_info['macro_size'] = math.ceil(loginfo['xbar_alloc'][idx]/macro_alloc[key])
+                    max_macro_size = max(layer_info['macro_size'], max_macro_size)
+                    idx = idx + 1
+                for comp in comp_alloc[key].keys():
+                    if comp == 'DAC':
+                        continue
+                    layer_info[comp] = math.ceil(comp_alloc[key][comp]/macro_alloc[key]) \
+                        if layer.op in ['OP_CONV', 'OP_FC'] else comp_alloc[key][comp]
+                loginfo[key] = layer_info
+            if self.cfg['macro_setting'] == 'unified':
+                for key in self.layer_list:
+                    loginfo[key]['macro_size'] = math.ceil((max_macro_size-self.default_min_macro_size)
+                                                           / self.default_macro_size_stride) * \
+                                                            self.default_macro_size_stride + self.default_min_macro_size
+            return
+
+        return efficient_power_efficiency
