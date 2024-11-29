@@ -135,6 +135,7 @@ class EvolutionAlgorithm():
             try:
                 assert macro_num[i] <= num_limits, print('MUTATE MACRO NUM DID NOT PASS')
             except AssertionError:
+                # self.macro_size
                 print(macro_num, self.macro_num_limits)
 
 
@@ -345,7 +346,9 @@ class EvolutionAlgorithm():
         ops += sum([2 * x * y for x, y in zip(self.layer_paras['fc_input_channel'],
                                               self.layer_paras['fc_output_channel'])])
         efficient_power_efficiency = ops / (energy*1e-9)
+        # comp_alloc 每一层的macro中adc数量
         result_dict = {
+
             "epe":efficient_power_efficiency / 1e9,
             "clk": max_ir_latency/clk,
             "cycle": cycle,
@@ -355,7 +358,8 @@ class EvolutionAlgorithm():
             "component_energy": component_energy/energy,
             "rram_energy": rram_energy/energy,
             "memory_energy": memory_energy/energy,
-            "energy": energy
+            "energy": energy,
+            "comp_alloc": comp_alloc
         }
 
         # print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \

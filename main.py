@@ -150,4 +150,4 @@ if __name__ == '__main__':
             print(f"最佳架构的功率效率为: {best_power_efficiency}")
             if args.macro_setting == 'unified':
                 print_pimcomp_configuration(best_arch, args.pimcomp)
-            print_accelerator_configuration(best_arch, args.output)
+            print_accelerator_configuration(best_arch, args.output)    #主要是关注这个函数
