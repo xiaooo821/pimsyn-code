@@ -2,8 +2,8 @@
     "CellPrecision": 2,
     "CrossbarH": 256,
     "CrossbarW": 256,
-    "ChipH": 15,
-    "ChipW": 14,
-    "CoreH": 24,
-    "CoreW": 24
+    "ChipH": 9,
+    "ChipW": 9,
+    "CoreH": 20,
+    "CoreW": 20
 }

@@ -71,7 +71,9 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                                    config=pimsyn_cfg,
                                    max_power=total_power-rram_power,
                                    rram_res=rram_res,
-                                   xbar_size=xbar_size
+                                   xbar_size=xbar_size,
+                                   total_power=total_power  #新增的
+
                                    )
     sa_engine = SimulatedAnnealingAlgorithm(layer_parameters=layer_paras,
                                             weight_volumn=conv_weight_volumn,
@@ -95,7 +97,7 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                 int(math.log(xbar_size, 2) + dac_res + rram_res - 2)
             if adc_res not in DEFAULT_ADC_RESOLUTION:
                 continue
-            ea_engine.run(dac_res, adc_res)
+            ea_engine.run(dac_res, adc_res,dup)
 
             if ea_engine.best_perf > best_ever:
                 best_ever = ea_engine.best_perf
@@ -108,11 +110,15 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                 best_arch['power_efficiency'] = ea_engine.best_perf/1e9
 
     set_weight_duplication(layer_dict, dup)
+    print('evaluate start')
+    print('dup is', best_arch['dup'])
     ea_engine.evaluate_fitness(best_arch['gene'],
                                best_arch['dac_res'],
                                best_arch['adc_res'],
+                               best_arch['dup'],
                                loginfo=best_arch
                                )
+    print('evaluate end')
     end = time.time()
     duration = (end-start)/60
     print(f"Processing ({rram_ratio}, {rram_res}, {xbar_size}) cost {duration}min \
@@ -121,6 +127,7 @@ def design_space_exploration(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
     return best_arch
 
 def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
+
     nn_parser = NeuralNetworkParser(pimsyn_cfg['network'])
     nn_parser.parse_neural_network()
     layer_paras = nn_parser.layer_paras
@@ -153,7 +160,8 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
                                        config=pimsyn_cfg,
                                        max_power=total_power - rram_power,
                                        rram_res=rram_res,
-                                       xbar_size=xbar_size
+                                       xbar_size=xbar_size,
+                                   total_power=total_power  # 新增的
                                        )
     sa_engine = SimulatedAnnealingAlgorithm(layer_parameters=layer_paras,
                                             weight_volumn=conv_weight_volumn,
@@ -166,6 +174,8 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
     sa_engine.run(conv_xbar_num)
     best_epe=-10000
     best_gene=[]
+    best_dup=[]
+
     # dup是每个层的权重复制因子/candidates每一层都是一个列表，代表一种dup
     for dup in tqdm(sa_engine.candidates,
                     desc=f'Iterate dup candidates rram_ratio={rram_ratio} rram_res={rram_res} xbar_size={xbar_size}'):
@@ -183,13 +193,12 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
         combined_sets=conv_weight_volumn+fc_weight_volumn
         macro_of_each_layer=[math.ceil(a*b/macro_size) for a,b in zip(combined_lists,combined_sets)]
         gene = [(i + 1) * 1000 + macro_of_each_layer[i] for i in range(len(macro_of_each_layer))]
-        # print("gene:",gene)
-        # print("len(gene):",len(gene))
         res = ea_engine.evaluate_fitness2(gene,
                                          pimsyn_cfg["dac_res"],
-                                         pimsyn_cfg["adc_res"])
+                                         pimsyn_cfg["adc_res"],dup)
         if res["epe"] > best_epe:
             best_gene=gene
+            best_dup=dup
             # if ea_engine.best_perf > best_ever:
             #     best_ever = ea_engine.best_perf
             #     xbar_alloc = [x * y for x, y in zip(dup, conv_weight_volumn)] + fc_weight_volumn
@@ -197,13 +206,25 @@ def design_space_exploration2(rram_ratio, rram_res, xbar_size, pimsyn_cfg):
     #  use this
     best_res=ea_engine.evaluate_fitness2(best_gene,
                                pimsyn_cfg["dac_res"],
-                               pimsyn_cfg["adc_res"])
+                               pimsyn_cfg["adc_res"],best_dup)
+
     end = time.time()
     duration = (end-start)/60
     print(f"Processing ({rram_ratio}, {rram_res}, {xbar_size}) cost {duration}min \
           with efficienct power efficiency = {best_res["epe"]}GOPS/W")
 
-    return best_res
+    best_arch = {
+        'rram_ratio': rram_ratio,
+        'rram_res': rram_res,
+        'xbar_size': xbar_size,
+        'res': best_res,
+        'dup': best_dup,
+        'gene': best_gene,
+        'xbar_alloc':[]
+    }
+
+
+    return best_arch
 
 
 if __name__ == '__main__':

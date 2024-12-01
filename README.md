@@ -55,4 +55,4 @@ python main.py --network ./models/JSON/resnet18.json  --total_power 115 --macro_
 
 下一步：
 1. 输出使用baseline配置的新配置 看看每个参数是否都一模一样
-2. 
+问题是：我现在不知道怎么找到对应参数生成的位置，检索不到？

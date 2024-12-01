@@ -1,12 +1,183 @@
 {
-    "epe": 161.93410585603579,
-    "clk": 1.0,
-    "cycle": 2729,
-    "total_time": 841465.3382899628,
-    "memory power ": 0.046992322981366456,
-    "component power": 0.9517157515527951,
-    "component_energy": 0.6686648385669725,
-    "rram_energy": 0.17850609671080184,
-    "memory_energy": 0.14892314727075828,
-    "energy": 22405080.565458704
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "res": {
+        "epe": 163.7751824238215,
+        "clk": 1.0,
+        "cycle": 2758,
+        "total_time": 840255.4710743802,
+        "memory power ": 0.046992322981366456,
+        "component power": 0.9517157515527951,
+        "component_energy": 0.6654799553394498,
+        "rram_energy": 0.18019563292290033,
+        "memory_energy": 0.1503797665761549,
+        "energy": 22153214.14578548,
+        "comp_alloc": {
+            "/conv1/Conv_output_0": {
+                "DAC": 417480,
+                "ADC": 2512,
+                "SHIFTADD": 320,
+                "ADDITION": 8
+            },
+            "/maxpool/MaxPool_output_0": {
+                "POOL": 11
+            },
+            "/layer1/layer1.0/conv1/Conv_output_0": {
+                "DAC": 857088,
+                "ADC": 3768,
+                "SHIFTADD": 480,
+                "ADDITION": 12
+            },
+            "/layer1/layer1.0/conv2/Conv_output_0": {
+                "DAC": 1216512,
+                "ADC": 5338,
+                "SHIFTADD": 680,
+                "ADDITION": 17
+            },
+            "/layer1/layer1.0/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer1/layer1.1/conv1/Conv_output_0": {
+                "DAC": 562176,
+                "ADC": 2512,
+                "SHIFTADD": 320,
+                "ADDITION": 8
+            },
+            "/layer1/layer1.1/conv2/Conv_output_0": {
+                "DAC": 331776,
+                "ADC": 1570,
+                "SHIFTADD": 200,
+                "ADDITION": 5
+            },
+            "/layer1/layer1.1/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer2/layer2.0/conv1/Conv_output_0": {
+                "DAC": 520704,
+                "ADC": 2512,
+                "SHIFTADD": 320,
+                "ADDITION": 8
+            },
+            "/layer2/layer2.0/conv2/Conv_output_0": {
+                "DAC": 626688,
+                "ADC": 2512,
+                "SHIFTADD": 320,
+                "ADDITION": 8
+            },
+            "/layer2/layer2.0/downsample/downsample.0/Conv_output_0": {
+                "DAC": 35328,
+                "ADC": 628,
+                "SHIFTADD": 80,
+                "ADDITION": 2
+            },
+            "/layer2/layer2.0/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer2/layer2.1/conv1/Conv_output_0": {
+                "DAC": 156672,
+                "ADC": 628,
+                "SHIFTADD": 80,
+                "ADDITION": 2
+            },
+            "/layer2/layer2.1/conv2/Conv_output_0": {
+                "DAC": 147456,
+                "ADC": 628,
+                "SHIFTADD": 80,
+                "ADDITION": 2
+            },
+            "/layer2/layer2.1/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer3/layer3.0/conv1/Conv_output_0": {
+                "DAC": 138240,
+                "ADC": 628,
+                "SHIFTADD": 80,
+                "ADDITION": 2
+            },
+            "/layer3/layer3.0/conv2/Conv_output_0": {
+                "DAC": 221184,
+                "ADC": 942,
+                "SHIFTADD": 120,
+                "ADDITION": 3
+            },
+            "/layer3/layer3.0/downsample/downsample.0/Conv_output_0": {
+                "DAC": 6144,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer3/layer3.0/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer3/layer3.1/conv1/Conv_output_0": {
+                "DAC": 73728,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer3/layer3.1/conv2/Conv_output_0": {
+                "DAC": 73728,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer3/layer3.1/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer4/layer4.0/conv1/Conv_output_0": {
+                "DAC": 36864,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer4/layer4.0/conv2/Conv_output_0": {
+                "DAC": 73728,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer4/layer4.0/downsample/downsample.0/Conv_output_0": {
+                "DAC": 4096,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer4/layer4.0/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/layer4/layer4.1/conv1/Conv_output_0": {
+                "DAC": 73728,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer4/layer4.1/conv2/Conv_output_0": {
+                "DAC": 73728,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            },
+            "/layer4/layer4.1/Add_output_0": {
+                "ELTWISE": 3,
+                "RELU": 3
+            },
+            "/avgpool/GlobalAveragePool_output_0": {
+                "POOL": 11
+            },
+            "191": {
+                "DAC": 100,
+                "ADC": 314,
+                "SHIFTADD": 40,
+                "ADDITION": 1
+            }
+        }
+    }
 }

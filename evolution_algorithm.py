@@ -22,9 +22,11 @@ class EvolutionAlgorithm():
                  max_power,
                  rram_res,
                  xbar_size,
+                 total_power,
                  ):
 
         self.best_perf = 0
+        self.total_power=total_power #新增的
         self.best_gene = []
         self.max_power = max_power
         self.layer_paras = layer_paras
@@ -177,15 +179,15 @@ class EvolutionAlgorithm():
             self.macro_size_mutate_space = list(range(self.default_min_macro_size, self.default_max_macro_size+1,
                                                       self.default_macro_size_stride))
 
-    def run(self, dac_res, adc_res):
+    def run(self, dac_res, adc_res,dup):
         self.reset_ea_engine()
         self.init_population()
-        self.fitness = [self.evaluate_fitness(gene, dac_res, adc_res)
+        self.fitness = [self.evaluate_fitness(gene, dac_res, adc_res,dup)
                         for gene in self.population]
         for _ in range(self.max_iter):
             self.select_parents()
             self.mutate()
-            self.child_fitness = [self.evaluate_fitness(gene, dac_res, adc_res)
+            self.child_fitness = [self.evaluate_fitness(gene, dac_res, adc_res,dup)
                                   for gene in self.childs]
             self.population = self.parents + self.childs
             self.fitness = self.parents_fitness + self.child_fitness
@@ -225,7 +227,10 @@ class EvolutionAlgorithm():
         for key, nn_layer in self.layer_dict.items():
             if 'OP_MRG' in nn_layer.op_order:
                 mrg_id = nn_layer.op_order.index('OP_MRG')
-                nn_layer.op_delay[mrg_id] = math.ceil(merge_delay[key]/clk)
+                try:
+                    nn_layer.op_delay[mrg_id] = math.ceil(merge_delay[key]/clk)
+                except:
+                    print('error is', merge_delay[key], clk)
             if 'OP_TRAN' in nn_layer.op_order:
                 tran_id = nn_layer.op_order.index('OP_TRAN')
                 nn_layer.op_delay[tran_id] = math.ceil(transfer_delay[key]/clk)
@@ -237,7 +242,7 @@ class EvolutionAlgorithm():
             nn_layer.op_delay[ld_id] = math.ceil(ld_delay[key]/clk)
             nn_layer.op_delay[st_id] = math.ceil(st_delay[key]/clk)
 
-    def evaluate_fitness2(self, gene, dac_res, adc_res, rram_read_lat=100, loginfo=None):
+    def evaluate_fitness2(self, gene, dac_res, adc_res, dup, rram_read_lat=100, loginfo=None):
 
         feasible = True
         clk = rram_read_lat
@@ -348,19 +353,45 @@ class EvolutionAlgorithm():
         efficient_power_efficiency = ops / (energy*1e-9)
         # comp_alloc 每一层的macro中adc数量
         result_dict = {
-
             "epe":efficient_power_efficiency / 1e9,
-            "clk": max_ir_latency/clk,
+            "clk": clk,
             "cycle": cycle,
             "total_time": total_time,
+            "dup" :dup,
+            "reram_power":self.total_power-self.max_power,
             "memory power ": memory_peak_power/self.max_power,
             "component power": component_power/self.max_power,
             "component_energy": component_energy/energy,
             "rram_energy": rram_energy/energy,
             "memory_energy": memory_energy/energy,
             "energy": energy,
-            "comp_alloc": comp_alloc
+            "comp_alloc": comp_alloc,
+            "dac_res":dac_res,
+            "adc_res": adc_res,
+            "xbar_size":self.xbar_size
+
         }
+        print(f'efficienct power efficiency is {efficient_power_efficiency / 1e9}\n \
+                       total_power is {self.total_power}\n \
+                       reram_power ia {self.total_power - self.max_power}\n \
+                       dup is {dup}\n \
+                       xbar_size, is {self.xbar_size} \n \
+                       gene is {gene}\n \
+                       cycle is {cycle}\n \
+                       memory capacity is {memory_capacity}\n \
+                       dac_res is {dac_res}\n \
+                       adc_res is {adc_res}\n \
+                       comp_alloc is {comp_alloc}\n \
+                       clk is {clk} {max_ir_latency / clk}\n \
+                       energy is {energy}\n \
+                       time is {total_time}\n \
+                       memory power is {memory_peak_power / self.max_power}\n \
+                       component power is {component_power / self.max_power}\n \
+                       memory energy is {memory_energy / energy}\n \
+                       memory static energy is {memory_static_power * total_time / energy}\n \
+                       memory dynamic energy is {memory_dynamic_energy / energy}\n \
+                       component energy is {component_energy / energy}\n \
+                       rram energy is {rram_energy / energy}')
 
         # print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \
         #         clk is {clk} {max_ir_latency/clk}\n \
@@ -375,6 +406,7 @@ class EvolutionAlgorithm():
         #         rram energy is {rram_energy/energy}')
 
         if loginfo:
+            print("======using loginfo========")
             loginfo["macro_h"] = nn_macro_mapper.row
             loginfo["macro_w"] = nn_macro_mapper.col
             loginfo["spm_capacity"] = memory_capacity
@@ -405,7 +437,7 @@ class EvolutionAlgorithm():
         return result_dict
 
 
-    def evaluate_fitness(self, gene, dac_res, adc_res, rram_read_lat=100, loginfo=None):
+    def evaluate_fitness(self, gene, dac_res, adc_res, dup, rram_read_lat=100, loginfo=None):
 
         feasible = True
         clk = rram_read_lat
@@ -425,7 +457,7 @@ class EvolutionAlgorithm():
                                                                          self.cfg['data_res']
                                                                          )
         total_macro_num = nn_macro_mapper.macro_num
-
+        print('before clk is', clk, gene, dac_res, adc_res, dup, rram_read_lat, loginfo)
         self.set_inter_macro_communication_delay(transfer_delay, merge_delay, clk)
         compiler = DataflowCompiler(self.layer_dict, bit_loop_cnt)
 
@@ -480,6 +512,8 @@ class EvolutionAlgorithm():
             if not comp_alloc:
                 break
             clk = max(rram_read_lat, max_ir_latency)
+            if clk is not int:
+                print('clk is', clk)
             self.set_intra_macro_communication_delay(ld_latency, st_latency, clk)
             self.set_inter_macro_communication_delay(transfer_delay, merge_delay, clk)
 
@@ -515,17 +549,33 @@ class EvolutionAlgorithm():
                                               self.layer_paras['fc_output_channel'])])
         efficient_power_efficiency = ops / (energy*1e-9)
 
-        # print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \
-        #         clk is {clk} {max_ir_latency/clk}\n \
-        #         energy is {energy}\n \
-        #         time is {total_time}\n \
-        #         memory power is {memory_peak_power/self.max_power}\n \
-        #         component power is {component_power/self.max_power}\n \
-        #         memory energy is {memory_energy/energy}\n \
-        #         memory static energy is {memory_static_power * total_time/energy}\n \
-        #         memory dynamic energy is {memory_dynamic_energy/energy}\n \
-        #         component energy is {component_energy/energy}\n \
-        #         rram energy is {rram_energy/energy}')
+        print(f'efficienct power efficiency is {efficient_power_efficiency/1e9}\n \
+                total_power is {self.total_power}\n \
+                reram_power ia { self.total_power-self.max_power}\n \
+                dup is {dup}\n \
+                xbar_size, is {self.xbar_size} \n \
+                gene is {gene }\n \
+                cycle is {cycle}\n \
+                memory capacity is {memory_capacity}\n \
+                dac_res is {dac_res}\n \
+                adc_res is {adc_res}\n \
+                comp_alloc is { comp_alloc}\n \
+                clk is {clk} {max_ir_latency/clk}\n \
+                energy is {energy}\n \
+                time is {total_time}\n \
+                memory power is {memory_peak_power/self.max_power}\n \
+                component power is {component_power/self.max_power}\n \
+                memory energy is {memory_energy/energy}\n \
+                memory static energy is {memory_static_power * total_time/energy}\n \
+                memory dynamic energy is {memory_dynamic_energy/energy}\n \
+                component energy is {component_energy/energy}\n \
+                rram energy is {rram_energy/energy}')
+
+        # total_power reram_power
+        # dup
+        # xc
+        # cycle
+        # comp alloc adc dac
 
         if loginfo:
             loginfo["macro_h"] = nn_macro_mapper.row

@@ -7,12 +7,12 @@
     "noc_power": 0.104,
     "SA":
     {
-        "iter":20,
+        "iter":100,
         "T0":1000,
         "Tf":1,
         "sigma":0.95,
         "alpha":0.1,
-        "length": 10,
+        "length": 1,
         "func_name":"computation"
     },
     "EA":

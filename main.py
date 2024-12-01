@@ -9,9 +9,10 @@ from frontend import FrontEnd
 from dse import design_space_exploration,design_space_exploration2
 
 
-DEFAULT_XBAR_SIZE = [128, 256, 512]
-DEFAULT_RRAM_RESOLUTION = [1, 2, 4]
-DEFAULT_RRAM_RATIO = [0.15, 0.2, 0.25, 0.3]
+DEFAULT_XBAR_SIZE = [256]
+DEFAULT_RRAM_RESOLUTION = [2]
+DEFAULT_RRAM_RATIO = [0.3]
+# 0.3 2 256
 
 # 将epe_result以json形式存入文件output_path中
 def save_result_to_json(res, output_path):
@@ -114,16 +115,11 @@ if __name__ == '__main__':
             upload_config=json.load(file)
             pimsyn_cfg.update(upload_config)
         # epe efficient power efficiency
-        result=design_space_exploration2(pimsyn_cfg["rram_ratio"],
+        best_arch=design_space_exploration2(pimsyn_cfg["rram_ratio"],
                                  pimsyn_cfg["rram_res"],
                                  pimsyn_cfg["xbar_size"],
                                             pimsyn_cfg)
-        print("efe of current CNN network using existed parameter is: ",result["epe"])
-        # 输出到output文件中
-        output_path=args.output
-        save_result_to_json(result, args.output)
-
-
+        print_accelerator_configuration(best_arch, args.output)
 
     else:
         with Pool() as pool:

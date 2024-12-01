@@ -1,0 +1,248 @@
+{
+    "rram_ratio": 0.2,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "power_efficiency": 330.2314590552191,
+    "dac_res": 1,
+    "adc_res": 9,
+    "macro_h": 8,
+    "macro_w": 7,
+    "spm_capacity": 256,
+    "/conv1/Conv_output_0": {
+        "duplication": 194,
+        "macro_num": 6,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/maxpool/MaxPool_output_0": {
+        "duplication": 33,
+        "POOL": 9
+    },
+    "/layer1/layer1.0/conv1/Conv_output_0": {
+        "duplication": 38,
+        "macro_num": 7,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer1/layer1.0/conv2/Conv_output_0": {
+        "duplication": 33,
+        "macro_num": 5,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer1/layer1.0/Add_output_0": {
+        "duplication": 31,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer1/layer1.1/conv1/Conv_output_0": {
+        "duplication": 40,
+        "macro_num": 5,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer1/layer1.1/conv2/Conv_output_0": {
+        "duplication": 36,
+        "macro_num": 5,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer1/layer1.1/Add_output_0": {
+        "duplication": 29,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer2/layer2.0/conv1/Conv_output_0": {
+        "duplication": 10,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer2/layer2.0/conv2/Conv_output_0": {
+        "duplication": 12,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer2/layer2.0/downsample/downsample.0/Conv_output_0": {
+        "duplication": 17,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer2/layer2.0/Add_output_0": {
+        "duplication": 7,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer2/layer2.1/conv1/Conv_output_0": {
+        "duplication": 8,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer2/layer2.1/conv2/Conv_output_0": {
+        "duplication": 9,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer2/layer2.1/Add_output_0": {
+        "duplication": 7,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer3/layer3.0/conv1/Conv_output_0": {
+        "duplication": 2,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer3/layer3.0/conv2/Conv_output_0": {
+        "duplication": 2,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer3/layer3.0/downsample/downsample.0/Conv_output_0": {
+        "duplication": 2,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer3/layer3.0/Add_output_0": {
+        "duplication": 2,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer3/layer3.1/conv1/Conv_output_0": {
+        "duplication": 2,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer3/layer3.1/conv2/Conv_output_0": {
+        "duplication": 2,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer3/layer3.1/Add_output_0": {
+        "duplication": 2,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer4/layer4.0/conv1/Conv_output_0": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer4/layer4.0/conv2/Conv_output_0": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer4/layer4.0/downsample/downsample.0/Conv_output_0": {
+        "duplication": 1,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer4/layer4.0/Add_output_0": {
+        "duplication": 1,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/layer4/layer4.1/conv1/Conv_output_0": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer4/layer4.1/conv2/Conv_output_0": {
+        "duplication": 1,
+        "macro_num": 2,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    },
+    "/layer4/layer4.1/Add_output_0": {
+        "duplication": 1,
+        "ELTWISE": 2,
+        "RELU": 2
+    },
+    "/avgpool/GlobalAveragePool_output_0": {
+        "duplication": 1,
+        "POOL": 9
+    },
+    "191": {
+        "duplication": 1,
+        "macro_num": 1,
+        "macro_sharing": "None",
+        "macro_size": 192,
+        "ADC": 426,
+        "SHIFTADD": 54,
+        "ADDITION": 1
+    }
+}

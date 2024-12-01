@@ -1,12 +1,143 @@
 {
-    "epe": 174.23979119886187,
-    "clk": 1.0,
-    "cycle": 9679,
-    "total_time": 2016021.8853586635,
-    "memory power ": 0.3938632546583851,
-    "component power": 0.6048448198757764,
-    "component_energy": 0.38802019953906125,
-    "rram_energy": 0.09682945862952884,
-    "memory_energy": 0.5135350826266433,
-    "energy": 129803486.31264733
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "res": {
+        "epe": 268.29569434390964,
+        "clk": 147.3823088455772,
+        "cycle": 9696,
+        "total_time": 1429018.8665667165,
+        "dup": [
+            205,
+            207,
+            53,
+            53,
+            13,
+            13,
+            4,
+            4,
+            1,
+            1
+        ],
+        "reram_power": 34.5,
+        "memory power ": 0.19693162732919256,
+        "component power": 0.8017764472049689,
+        "component_energy": 0.5830370971838722,
+        "rram_energy": 0.12496665013263439,
+        "memory_energy": 0.2902332567687878,
+        "energy": 84298528.93207045,
+        "comp_alloc": {
+            "input": {
+                "DAC": 44280,
+                "ADC": 3335,
+                "SHIFTADD": 420,
+                "ADDITION": 5,
+                "RELU": 15
+            },
+            "input.4": {
+                "DAC": 953856,
+                "ADC": 8671,
+                "SHIFTADD": 1092,
+                "ADDITION": 13,
+                "RELU": 39
+            },
+            "input.8": {
+                "POOL": 15
+            },
+            "input.12": {
+                "DAC": 244224,
+                "ADC": 2668,
+                "SHIFTADD": 336,
+                "ADDITION": 4,
+                "RELU": 12
+            },
+            "input.16": {
+                "DAC": 488448,
+                "ADC": 4002,
+                "SHIFTADD": 504,
+                "ADDITION": 6,
+                "RELU": 18
+            },
+            "input.20": {
+                "POOL": 15
+            },
+            "input.24": {
+                "DAC": 119808,
+                "ADC": 1334,
+                "SHIFTADD": 168,
+                "ADDITION": 2,
+                "RELU": 6
+            },
+            "input.28": {
+                "DAC": 239616,
+                "ADC": 2001,
+                "SHIFTADD": 252,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "input.32": {
+                "POOL": 15
+            },
+            "input.36": {
+                "DAC": 147456,
+                "ADC": 1334,
+                "SHIFTADD": 168,
+                "ADDITION": 2,
+                "RELU": 6
+            },
+            "input.40": {
+                "DAC": 294912,
+                "ADC": 2001,
+                "SHIFTADD": 252,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "input.44": {
+                "POOL": 15
+            },
+            "input.48": {
+                "DAC": 73728,
+                "ADC": 667,
+                "SHIFTADD": 84,
+                "ADDITION": 1,
+                "RELU": 3
+            },
+            "input.52": {
+                "DAC": 73728,
+                "ADC": 667,
+                "SHIFTADD": 84,
+                "ADDITION": 1,
+                "RELU": 3
+            },
+            "input.56": {
+                "POOL": 15
+            },
+            "onnx::Flatten_52": {
+                "POOL": 15
+            },
+            "input.60": {
+                "DAC": 100,
+                "ADC": 22011,
+                "SHIFTADD": 2772,
+                "ADDITION": 33,
+                "RELU": 99
+            },
+            "input.64": {
+                "DAC": 100,
+                "ADC": 4002,
+                "SHIFTADD": 504,
+                "ADDITION": 6,
+                "RELU": 18
+            },
+            "58": {
+                "DAC": 100,
+                "ADC": 1334,
+                "SHIFTADD": 168,
+                "ADDITION": 2
+            }
+        },
+        "dac_res": 1,
+        "adc_res": 9,
+        "xbar_size": 256
+    }
 }
