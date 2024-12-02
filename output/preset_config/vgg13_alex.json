@@ -3,52 +3,60 @@
     "rram_res": 2,
     "xbar_size": 256,
     "res": {
-        "epe": 388.0750690260861,
-        "clk": 1.0,
+        "epe": 386.7932884687152,
+        "clk": 213.97014925373134,
         "cycle": 502,
-        "total_time": 107458.59830564419,
-        "memory power ": 0.04316736645962733,
-        "component power": 0.9555407080745341,
-        "component_energy": 0.710246948406769,
-        "rram_energy": 0.1740354453090235,
-        "memory_energy": 0.11268128714103764,
-        "energy": 3680671.7926628403,
+        "total_time": 107413.01492537314,
+        "dup": [
+            475,
+            116,
+            26,
+            25,
+            25
+        ],
+        "reram_power": 34.5,
+        "memory power ": 0.04262094409937888,
+        "component power": 0.9560871304347826,
+        "component_energy": 0.7112508648308346,
+        "rram_energy": 0.17457069152893237,
+        "memory_energy": 0.11115343695026125,
+        "energy": 3692869.040346678,
         "comp_alloc": {
             "/features/features.0/Conv_output_0": {
                 "DAC": 1379400,
-                "ADC": 9100,
-                "SHIFTADD": 1140,
+                "ADC": 9160,
+                "SHIFTADD": 1160,
                 "ADDITION": 20
             },
             "/features/features.2/MaxPool_output_0": {
                 "POOL": 20
             },
             "/features/features.3/Conv_output_0": {
-                "DAC": 1408000,
-                "ADC": 7735,
-                "SHIFTADD": 969,
+                "DAC": 1484800,
+                "ADC": 7786,
+                "SHIFTADD": 986,
                 "ADDITION": 17
             },
             "/features/features.5/MaxPool_output_0": {
                 "POOL": 20
             },
             "/features/features.6/Conv_output_0": {
-                "DAC": 691200,
-                "ADC": 3640,
-                "SHIFTADD": 456,
+                "DAC": 718848,
+                "ADC": 3664,
+                "SHIFTADD": 464,
                 "ADDITION": 8
             },
             "/features/features.8/Conv_output_0": {
                 "DAC": 691200,
-                "ADC": 3640,
-                "SHIFTADD": 456,
+                "ADC": 3664,
+                "SHIFTADD": 464,
                 "ADDITION": 8
             },
             "/features/features.10/Conv_output_0": {
-                "DAC": 571392,
-                "ADC": 2730,
-                "SHIFTADD": 342,
-                "ADDITION": 6
+                "DAC": 460800,
+                "ADC": 2290,
+                "SHIFTADD": 290,
+                "ADDITION": 5
             },
             "/features/features.12/MaxPool_output_0": {
                 "POOL": 20
@@ -58,22 +66,25 @@
             },
             "/classifier/classifier.1/Gemm_output_0": {
                 "DAC": 100,
-                "ADC": 5460,
-                "SHIFTADD": 684,
+                "ADC": 5496,
+                "SHIFTADD": 696,
                 "ADDITION": 12
             },
             "/classifier/classifier.4/Gemm_output_0": {
                 "DAC": 100,
-                "ADC": 2730,
-                "SHIFTADD": 342,
+                "ADC": 2748,
+                "SHIFTADD": 348,
                 "ADDITION": 6
             },
             "36": {
                 "DAC": 100,
-                "ADC": 910,
-                "SHIFTADD": 114,
+                "ADC": 916,
+                "SHIFTADD": 116,
                 "ADDITION": 2
             }
-        }
+        },
+        "dac_res": 1,
+        "adc_res": 9,
+        "xbar_size": 256
     }
 }

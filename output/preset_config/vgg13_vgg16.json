@@ -1,12 +1,164 @@
 {
-    "epe": 297.7492140016494,
-    "clk": 1.0,
-    "cycle": 11900,
-    "total_time": 1782545.8033573143,
-    "memory power ": 0.20422539130434783,
-    "component power": 0.7944826832298136,
-    "component_energy": 0.5736362005594142,
-    "rram_energy": 0.12158611832077754,
-    "memory_energy": 0.3029936725698287,
-    "energy": 103914728.18406364
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "res": {
+        "epe": 386.6274187640665,
+        "clk": 128.40807651434645,
+        "cycle": 11223,
+        "total_time": 1441123.8427205102,
+        "dup": [
+            177,
+            182,
+            44,
+            44,
+            14,
+            11,
+            11,
+            3,
+            3,
+            3,
+            1,
+            1,
+            1
+        ],
+        "reram_power": 34.5,
+        "memory power ": 0.09167582608695653,
+        "component power": 0.907032248447205,
+        "component_energy": 0.7025145992472775,
+        "rram_energy": 0.14318981736083067,
+        "memory_energy": 0.15242274819301785,
+        "energy": 80026731.52076931,
+        "comp_alloc": {
+            "vgg0_conv0_fwd": {
+                "DAC": 38232,
+                "ADC": 2904,
+                "SHIFTADD": 364,
+                "ADDITION": 4,
+                "RELU": 12
+            },
+            "vgg0_conv1_fwd": {
+                "DAC": 838656,
+                "ADC": 8712,
+                "SHIFTADD": 1092,
+                "ADDITION": 12,
+                "RELU": 36
+            },
+            "vgg0_pool0_fwd": {
+                "POOL": 15
+            },
+            "vgg0_conv2_fwd": {
+                "DAC": 202752,
+                "ADC": 2178,
+                "SHIFTADD": 273,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "vgg0_conv3_fwd": {
+                "DAC": 405504,
+                "ADC": 3630,
+                "SHIFTADD": 455,
+                "ADDITION": 5,
+                "RELU": 15
+            },
+            "vgg0_pool1_fwd": {
+                "POOL": 15
+            },
+            "vgg0_conv4_fwd": {
+                "DAC": 129024,
+                "ADC": 1452,
+                "SHIFTADD": 182,
+                "ADDITION": 2,
+                "RELU": 6
+            },
+            "vgg0_conv5_fwd": {
+                "DAC": 202752,
+                "ADC": 2178,
+                "SHIFTADD": 273,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "vgg0_conv6_fwd": {
+                "DAC": 202752,
+                "ADC": 2178,
+                "SHIFTADD": 273,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "vgg0_pool2_fwd": {
+                "POOL": 15
+            },
+            "vgg0_conv7_fwd": {
+                "DAC": 110592,
+                "ADC": 1452,
+                "SHIFTADD": 182,
+                "ADDITION": 2,
+                "RELU": 6
+            },
+            "vgg0_conv8_fwd": {
+                "DAC": 221184,
+                "ADC": 2178,
+                "SHIFTADD": 273,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "vgg0_conv9_fwd": {
+                "DAC": 221184,
+                "ADC": 2178,
+                "SHIFTADD": 273,
+                "ADDITION": 3,
+                "RELU": 9
+            },
+            "vgg0_pool3_fwd": {
+                "POOL": 15
+            },
+            "vgg0_conv10_fwd": {
+                "DAC": 73728,
+                "ADC": 726,
+                "SHIFTADD": 91,
+                "ADDITION": 1,
+                "RELU": 3
+            },
+            "vgg0_conv11_fwd": {
+                "DAC": 73728,
+                "ADC": 726,
+                "SHIFTADD": 91,
+                "ADDITION": 1,
+                "RELU": 3
+            },
+            "vgg0_conv12_fwd": {
+                "DAC": 73728,
+                "ADC": 726,
+                "SHIFTADD": 91,
+                "ADDITION": 1,
+                "RELU": 3
+            },
+            "vgg0_pool4_fwd": {
+                "POOL": 15
+            },
+            "vgg0_dense0_fwd": {
+                "DAC": 100,
+                "ADC": 23958,
+                "SHIFTADD": 3003,
+                "ADDITION": 33,
+                "RELU": 99
+            },
+            "vgg0_dense1_fwd": {
+                "DAC": 100,
+                "ADC": 4356,
+                "SHIFTADD": 546,
+                "ADDITION": 6,
+                "RELU": 18
+            },
+            "vgg0_dense2_fwd": {
+                "DAC": 100,
+                "ADC": 1452,
+                "SHIFTADD": 182,
+                "ADDITION": 2
+            }
+        },
+        "dac_res": 1,
+        "adc_res": 9,
+        "xbar_size": 256
+    }
 }

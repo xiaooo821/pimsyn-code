@@ -1,12 +1,194 @@
 {
-    "epe": 613.8200923364478,
-    "clk": 0.9591673894189071,
-    "cycle": 12066,
-    "total_time": 1206600,
-    "memory power ": 0.045353055900621116,
-    "component power": 0.9533550186335404,
-    "component_energy": 0.780873047011816,
-    "rram_energy": 0.13475647876817878,
-    "memory_energy": 0.08234898508653558,
-    "energy": 62076217.93376321
+    "rram_ratio": 0.3,
+    "rram_res": 2,
+    "xbar_size": 256,
+    "res": {
+        "epe": 429.1290246256867,
+        "clk": 119.06976744186046,
+        "cycle": 13447,
+        "total_time": 1601131.1627906978,
+        "dup": [
+            72,
+            22,
+            13,
+            13,
+            15,
+            16,
+            3,
+            3,
+            4,
+            3,
+            3,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "reram_power": 34.5,
+        "memory power ": 0.2017941366459627,
+        "component power": 0.7969139378881988,
+        "component_energy": 0.5759227323262532,
+        "rram_energy": 0.10977823053460269,
+        "memory_energy": 0.3124236894841983,
+        "energy": 88792944.86602573,
+        "comp_alloc": {
+            "onnx::MaxPool_39": {
+                "DAC": 84672,
+                "ADC": 1652,
+                "SHIFTADD": 208,
+                "ADDITION": 4,
+                "RELU": 8
+            },
+            "input": {
+                "POOL": 10
+            },
+            "input.4": {
+                "DAC": 152064,
+                "ADC": 1652,
+                "SHIFTADD": 208,
+                "ADDITION": 4,
+                "RELU": 8
+            },
+            "input.8": {
+                "DAC": 239616,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.12": {
+                "DAC": 239616,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.16": {
+                "DAC": 276480,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.20": {
+                "DAC": 294912,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.24": {
+                "POOL": 10
+            },
+            "input.28": {
+                "DAC": 110592,
+                "ADC": 1652,
+                "SHIFTADD": 208,
+                "ADDITION": 4,
+                "RELU": 8
+            },
+            "input.32": {
+                "DAC": 221184,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.36": {
+                "DAC": 294912,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.40": {
+                "DAC": 221184,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.44": {
+                "DAC": 221184,
+                "ADC": 2478,
+                "SHIFTADD": 312,
+                "ADDITION": 6,
+                "RELU": 12
+            },
+            "input.48": {
+                "POOL": 10
+            },
+            "input.52": {
+                "DAC": 73728,
+                "ADC": 826,
+                "SHIFTADD": 104,
+                "ADDITION": 2,
+                "RELU": 4
+            },
+            "input.56": {
+                "DAC": 73728,
+                "ADC": 826,
+                "SHIFTADD": 104,
+                "ADDITION": 2,
+                "RELU": 4
+            },
+            "input.60": {
+                "DAC": 73728,
+                "ADC": 826,
+                "SHIFTADD": 104,
+                "ADDITION": 2,
+                "RELU": 4
+            },
+            "input.64": {
+                "DAC": 73728,
+                "ADC": 826,
+                "SHIFTADD": 104,
+                "ADDITION": 2,
+                "RELU": 4
+            },
+            "input.68": {
+                "DAC": 73728,
+                "ADC": 826,
+                "SHIFTADD": 104,
+                "ADDITION": 2,
+                "RELU": 4
+            },
+            "onnx::Reshape_74": {
+                "POOL": 10
+            },
+            "onnx::Reshape_82": {
+                "POOL": 10
+            },
+            "onnx::Reshape_90": {
+                "POOL": 10
+            },
+            "onnx::Reshape_98": {
+                "POOL": 10
+            },
+            "input.72": {
+                "DAC": 100,
+                "ADC": 33040,
+                "SHIFTADD": 4160,
+                "ADDITION": 80,
+                "RELU": 160
+            },
+            "input.76": {
+                "DAC": 100,
+                "ADC": 4956,
+                "SHIFTADD": 624,
+                "ADDITION": 12,
+                "RELU": 24
+            },
+            "logits": {
+                "DAC": 100,
+                "ADC": 1652,
+                "SHIFTADD": 208,
+                "ADDITION": 4
+            }
+        },
+        "dac_res": 1,
+        "adc_res": 9,
+        "xbar_size": 256
+    }
 }
