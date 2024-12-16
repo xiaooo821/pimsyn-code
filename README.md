@@ -1,3 +1,9 @@
+# m_cnn分支
+现在要实现一个 多个cnn都适配的架构！
+
+
+# main分支
+实现不同cnn网络的运行
 dse
 - design_space_exploration2 修改后的，运行得到规定架构下的运行效率。
 - design_space_exploration 运行得到选定网络的最佳架构
@@ -43,4 +49,6 @@ python main.py --network ./models/JSON/resnet18.json  --total_power 115 --macro_
 
 
 最后运行python draw.py绘制组合图。
+
+
 

@@ -3,16 +3,16 @@
     "rram_res": 2,
     "xbar_size": 256,
     "res": {
-        "epe": 386.6274187640665,
-        "clk": 128.40807651434645,
-        "cycle": 11223,
-        "total_time": 1441123.8427205102,
+        "epe": 300.11783207110096,
+        "clk": 150.42437431991294,
+        "cycle": 11901,
+        "total_time": 1790200.4787812838,
         "dup": [
-            177,
-            182,
+            184,
+            181,
+            45,
             44,
-            44,
-            14,
+            13,
             11,
             11,
             3,
@@ -23,137 +23,137 @@
             1
         ],
         "reram_power": 34.5,
-        "memory power ": 0.09167582608695653,
-        "component power": 0.907032248447205,
-        "component_energy": 0.7025145992472775,
-        "rram_energy": 0.14318981736083067,
-        "memory_energy": 0.15242274819301785,
-        "energy": 80026731.52076931,
+        "memory power ": 0.20422539130434783,
+        "component power": 0.7944826832298136,
+        "component_energy": 0.5686173839333829,
+        "rram_energy": 0.12293982660786144,
+        "memory_energy": 0.3066368670822108,
+        "energy": 103094602.63150865,
         "comp_alloc": {
             "vgg0_conv0_fwd": {
-                "DAC": 38232,
-                "ADC": 2904,
-                "SHIFTADD": 364,
+                "DAC": 39744,
+                "ADC": 2508,
+                "SHIFTADD": 316,
                 "ADDITION": 4,
                 "RELU": 12
             },
             "vgg0_conv1_fwd": {
-                "DAC": 838656,
-                "ADC": 8712,
-                "SHIFTADD": 1092,
+                "DAC": 834048,
+                "ADC": 7524,
+                "SHIFTADD": 948,
                 "ADDITION": 12,
                 "RELU": 36
             },
             "vgg0_pool0_fwd": {
-                "POOL": 15
+                "POOL": 13
             },
             "vgg0_conv2_fwd": {
-                "DAC": 202752,
-                "ADC": 2178,
-                "SHIFTADD": 273,
+                "DAC": 207360,
+                "ADC": 1881,
+                "SHIFTADD": 237,
                 "ADDITION": 3,
                 "RELU": 9
             },
             "vgg0_conv3_fwd": {
                 "DAC": 405504,
-                "ADC": 3630,
-                "SHIFTADD": 455,
+                "ADC": 3135,
+                "SHIFTADD": 395,
                 "ADDITION": 5,
                 "RELU": 15
             },
             "vgg0_pool1_fwd": {
-                "POOL": 15
+                "POOL": 13
             },
             "vgg0_conv4_fwd": {
-                "DAC": 129024,
-                "ADC": 1452,
-                "SHIFTADD": 182,
+                "DAC": 119808,
+                "ADC": 1254,
+                "SHIFTADD": 158,
                 "ADDITION": 2,
                 "RELU": 6
             },
             "vgg0_conv5_fwd": {
                 "DAC": 202752,
-                "ADC": 2178,
-                "SHIFTADD": 273,
+                "ADC": 1881,
+                "SHIFTADD": 237,
                 "ADDITION": 3,
                 "RELU": 9
             },
             "vgg0_conv6_fwd": {
                 "DAC": 202752,
-                "ADC": 2178,
-                "SHIFTADD": 273,
+                "ADC": 1881,
+                "SHIFTADD": 237,
                 "ADDITION": 3,
                 "RELU": 9
             },
             "vgg0_pool2_fwd": {
-                "POOL": 15
+                "POOL": 13
             },
             "vgg0_conv7_fwd": {
                 "DAC": 110592,
-                "ADC": 1452,
-                "SHIFTADD": 182,
+                "ADC": 1254,
+                "SHIFTADD": 158,
                 "ADDITION": 2,
                 "RELU": 6
             },
             "vgg0_conv8_fwd": {
                 "DAC": 221184,
-                "ADC": 2178,
-                "SHIFTADD": 273,
+                "ADC": 1881,
+                "SHIFTADD": 237,
                 "ADDITION": 3,
                 "RELU": 9
             },
             "vgg0_conv9_fwd": {
                 "DAC": 221184,
-                "ADC": 2178,
-                "SHIFTADD": 273,
+                "ADC": 1881,
+                "SHIFTADD": 237,
                 "ADDITION": 3,
                 "RELU": 9
             },
             "vgg0_pool3_fwd": {
-                "POOL": 15
+                "POOL": 13
             },
             "vgg0_conv10_fwd": {
                 "DAC": 73728,
-                "ADC": 726,
-                "SHIFTADD": 91,
+                "ADC": 627,
+                "SHIFTADD": 79,
                 "ADDITION": 1,
                 "RELU": 3
             },
             "vgg0_conv11_fwd": {
                 "DAC": 73728,
-                "ADC": 726,
-                "SHIFTADD": 91,
+                "ADC": 627,
+                "SHIFTADD": 79,
                 "ADDITION": 1,
                 "RELU": 3
             },
             "vgg0_conv12_fwd": {
                 "DAC": 73728,
-                "ADC": 726,
-                "SHIFTADD": 91,
+                "ADC": 627,
+                "SHIFTADD": 79,
                 "ADDITION": 1,
                 "RELU": 3
             },
             "vgg0_pool4_fwd": {
-                "POOL": 15
+                "POOL": 13
             },
             "vgg0_dense0_fwd": {
                 "DAC": 100,
-                "ADC": 23958,
-                "SHIFTADD": 3003,
+                "ADC": 20691,
+                "SHIFTADD": 2607,
                 "ADDITION": 33,
                 "RELU": 99
             },
             "vgg0_dense1_fwd": {
                 "DAC": 100,
-                "ADC": 4356,
-                "SHIFTADD": 546,
+                "ADC": 3762,
+                "SHIFTADD": 474,
                 "ADDITION": 6,
                 "RELU": 18
             },
             "vgg0_dense2_fwd": {
                 "DAC": 100,
-                "ADC": 1452,
-                "SHIFTADD": 182,
+                "ADC": 1254,
+                "SHIFTADD": 158,
                 "ADDITION": 2
             }
         },
